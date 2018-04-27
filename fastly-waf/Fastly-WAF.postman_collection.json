@@ -1,0 +1,1787 @@
+{
+	"info": {
+		"_postman_id": "b613f180-b50e-492c-9651-a2895347b388",
+		"name": "Fastly-WAF",
+		"description": "Version 20180404-222821",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Web Application Firewall",
+			"description": "# Category\nWeb Application Firewall\n<br><br>\n## Description\nFastly offers a web application firewall (WAF) security service that allows you to detect malicious request traffic and log or log and block that traffic before it reaches your web application. The Fastly WAF provides rules that detect and block potential attacks. The rules are collected into a policy and deployed within your Fastly service at the edge.",
+			"item": [
+				{
+					"name": "Configuration sets",
+					"description": "# Section\nConfiguration sets\n<br><br>\n## Description\nConfiguration set object used to view and select the available versions of the Fastly WAF rules.\n<br><br>\n## Fields\n<table>\n<tr>\n<th>Field</th>\n<th>Type</th>\n<th>Description</th>\n</tr>\n<tr>\n<th>active</th>\n<td><i>String</i></td>\n<td>The active configuration set is the default configuration set when creating a new WAF. When Fastly adds configuration sets, the new versions become the default (active).</td>\n</tr>\n<tr>\n<th>name</th>\n<td><i>String</i></td>\n<td>The name of the configuration set.</td>\n</tr>\n</table>",
+					"item": [
+						{
+							"name": "/wafs/configuration_sets",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Fastly-Key",
+										"value": "{{token}}"
+									},
+									{
+										"key": "Accept",
+										"value": "application/vnd.api+json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{url}}/wafs/configuration_sets",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"wafs",
+										"configuration_sets"
+									]
+								},
+								"description": "**Description:**\n\nList all Fastly WAF rule versions."
+							},
+							"response": []
+						},
+						{
+							"name": "/wafs/configuration_sets/CONFIGURATION_SET_ID/relationships/wafs",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Fastly-Key",
+										"value": "{{token}}"
+									},
+									{
+										"key": "Accept",
+										"value": "application/vnd.api+json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{url}}/wafs/configuration_sets/{{configuration_set_id}}/relationships/wafs",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"wafs",
+										"configuration_sets",
+										"{{configuration_set_id}}",
+										"relationships",
+										"wafs"
+									]
+								},
+								"description": "**Description:**\n\nList the WAF objects currently using the specified configuration set."
+							},
+							"response": []
+						},
+						{
+							"name": "/wafs/configuration_sets/CONFIGURATION_SET_ID/relationships/wafs",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Fastly-Key",
+										"value": "{{token}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/vnd.api+json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/vnd.api+json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"data\": [\n\t\t{\n\t\t\t\"id\": \"{{waf_id}}\",\n\t\t\t\"type\": \"waf\"\n\t\t}\n\t]\n}"
+								},
+								"url": {
+									"raw": "{{url}}/wafs/configuration_sets/{{configuration_set_id}}/relationships/wafs",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"wafs",
+										"configuration_sets",
+										"{{configuration_set_id}}",
+										"relationships",
+										"wafs"
+									]
+								},
+								"description": "**Description:**\n\nUpdate one or more WAF objects to use the specified configuration set."
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Firewall",
+					"description": "# Section\nFirewall\n<br><br>\n## Description\nFirewall object used when configuring WAF.\n<br><br>\n## Fields\n<table>\n<tr>\n<th>Field</th>\n<th>Type</th>\n<th>Description</th>\n</tr>\n<tr>\n<th>last_push</th>\n<td><i>String</i></td>\n<td>Date and time that VCL was last pushed to cache nodes.</td>\n</tr>\n<tr>\n<th>prefetch_condition</th>\n<td><i>String</i></td>\n<td>Name of the corresponding condition object.</td>\n</tr>\n<tr>\n<th>response</th>\n<td><i>String</i></td>\n<td>Name of the corresponding response object.</td>\n</tr>\n<tr>\n<th>version</th>\n<td><i>String</i></td>\n<td>The current version number of a service.</td>\n</tr>\n<tr>\n<th>service_id</th>\n<td><i>String</i></td>\n<td>The service ID.</td>\n</tr>\n<tr>\n<th>disabled</th>\n<td><i>Boolean</i></td>\n<td>The status of the firewall. Defaults to false.</td>\n</tr>\n<tr>\n<th>rule_statuses_log_count</th>\n<td><i>Integer</i></td>\n<td>The number of rule statuses set to log.</td>\n</tr>\n<tr>\n<th>rule_statuses_block_count</th>\n<td><i>Integer</i></td>\n<td>The number of rule statuses set to block.</td>\n</tr>\n<tr>\n<th>rule_statuses_disabled_count</th>\n<td><i>Integer</i></td>\n<td>The number of rule statuses set to disabled.</td>\n</tr>\n</table>",
+					"item": [
+						{
+							"name": "/service/SERVICE_ID/version/VERSION/wafs",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Fastly-Key",
+										"value": "{{token}}"
+									},
+									{
+										"key": "Accept",
+										"value": "application/vnd.api+json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{url}}/service/{{service_id}}/version/{{version}}/wafs?",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"service",
+										"{{service_id}}",
+										"version",
+										"{{version}}",
+										"wafs"
+									],
+									"query": [
+										{
+											"key": "page[size]",
+											"value": "100",
+											"description": "Integer. Limit the number of returned tags.",
+											"disabled": true
+										},
+										{
+											"key": "page[number]",
+											"value": "1",
+											"description": "Integer. Request a specific page of tags.",
+											"disabled": true
+										},
+										{
+											"key": "include",
+											"value": "configuration_set,owasp",
+											"description": "String. Include relationships. Optional, comma separated values. Permitted values: `configuration_set,owasp`.",
+											"disabled": true
+										}
+									]
+								},
+								"description": "**Description:**\n\nList all firewall objects for a particular service and version."
+							},
+							"response": []
+						},
+						{
+							"name": "/service/SERVICE_ID/version/VERSION/wafs/WAF_ID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Fastly-Key",
+										"value": "{{token}}"
+									},
+									{
+										"key": "Accept",
+										"value": "application/vnd.api+json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{url}}/service/{{service_id}}/version/{{version}}/wafs/{{waf_id}}?",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"service",
+										"{{service_id}}",
+										"version",
+										"{{version}}",
+										"wafs",
+										"{{waf_id}}"
+									],
+									"query": [
+										{
+											"key": "service_id",
+											"value": "{{value}}",
+											"description": "String. The ID of the service.",
+											"disabled": true
+										},
+										{
+											"key": "version",
+											"value": "{{value}}",
+											"description": "Integer. The number of the version.",
+											"disabled": true
+										},
+										{
+											"key": "waf_id",
+											"value": "{{value}}",
+											"description": "String. The firewall ID.",
+											"disabled": true
+										}
+									]
+								},
+								"description": "**Description:**\n\nGet a specific firewall object."
+							},
+							"response": []
+						},
+						{
+							"name": "/service/SERVICE_ID/version/VERSION/wafs",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 201\"] = responseCode.code === 201;"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Fastly-Key",
+										"value": "{{token}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/vnd.api+json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/vnd.api+json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"data\": {\n\t\t\"attributes\": {\n\t\t\t\"prefetch_condition\": \"WAF-Condition\",\n\t\t\t\"response\": \"WAF_Error\"\n\t\t},\n\t\t\"type\": \"waf\"\n\t}\n}"
+								},
+								"url": {
+									"raw": "{{url}}/service/{{service_id}}/version/{{version}}/wafs",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"service",
+										"{{service_id}}",
+										"version",
+										"{{version}}",
+										"wafs"
+									]
+								},
+								"description": "**Description:**\n\nCreate a firewall object for a particular service and version."
+							},
+							"response": []
+						},
+						{
+							"name": "/service/SERVICE_ID/version/VERSION/wafs/WAF_ID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Fastly-Key",
+										"value": "{{token}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/vnd.api+json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/vnd.api+json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"data\": {\n\t\t\"attributes\": {\n\t\t\t\"response\": \"new response\"\n\t\t},\n\t\t\"id\": \"{{waf_id}}\",\n\t\t\"type\": \"waf\"\n\t}\n}"
+								},
+								"url": {
+									"raw": "{{url}}/service/{{service_id}}/version/{{version}}/wafs/{{waf_id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"service",
+										"{{service_id}}",
+										"version",
+										"{{version}}",
+										"wafs",
+										"{{waf_id}}"
+									]
+								},
+								"description": "**Description:**\n\nUpdate a firewall object for a particular service and version."
+							},
+							"response": []
+						},
+						{
+							"name": "/wafs/WAF_ID/disable",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 202\"] = responseCode.code === 202;"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Fastly-Key",
+										"value": "{{token}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/vnd.api+json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/vnd.api+json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"data\": {\n\t\t\"id\": \"{{waf_id}}\",\n\t\t\"type\": \"waf\"\n\t}\n}"
+								},
+								"url": {
+									"raw": "{{url}}/wafs/{{waf_id}}/disable",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"wafs",
+										"{{waf_id}}",
+										"disable"
+									]
+								},
+								"description": "**Description:**\n\nTemporarily disable a firewall object for a particular service and version."
+							},
+							"response": []
+						},
+						{
+							"name": "/wafs/WAF_ID/enable",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 202\"] = responseCode.code === 202;"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Fastly-Key",
+										"value": "{{token}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/vnd.api+json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/vnd.api+json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"data\": {\n\t\t\"id\": \"{{waf_id}}\",\n\t\t\"type\": \"waf\"\n\t}\n}"
+								},
+								"url": {
+									"raw": "{{url}}/wafs/{{waf_id}}/enable",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"wafs",
+										"{{waf_id}}",
+										"enable"
+									]
+								},
+								"description": "**Description:**\n\nRe-enable a firewall object for a particular service and version after it has"
+							},
+							"response": []
+						},
+						{
+							"name": "/wafs",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Fastly-Key",
+										"value": "{{token}}"
+									},
+									{
+										"key": "Accept",
+										"value": "application/vnd.api+json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{url}}/wafs?",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"wafs"
+									],
+									"query": [
+										{
+											"key": "filter[rules][rule_id]",
+											"value": "{{value}}",
+											"description": "Integer. Limit the returned wafs to a specific rule ID.",
+											"disabled": true
+										},
+										{
+											"key": "filter[customer_id]",
+											"value": "{{value}}",
+											"description": "Integer. Limit the returned wafs to a specific customer.",
+											"disabled": true
+										},
+										{
+											"key": "page[size]",
+											"value": "100",
+											"description": "Integer. Limit the number of returned tags.",
+											"disabled": true
+										},
+										{
+											"key": "page[number]",
+											"value": "1",
+											"description": "Integer. Request a specific page of tags.",
+											"disabled": true
+										},
+										{
+											"key": "include",
+											"value": "configuration_set,owasp",
+											"description": "String. Include relationships. Optional, comma separated values. Permitted values: `configuration_set,owasp`.",
+											"disabled": true
+										}
+									]
+								},
+								"description": "**Description:**\n\nList all active firewall objects."
+							},
+							"response": []
+						},
+						{
+							"name": "/wafs/WAF_ID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Fastly-Key",
+										"value": "{{token}}"
+									},
+									{
+										"key": "Accept",
+										"value": "application/vnd.api+json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{url}}/wafs/{{waf_id}}?",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"wafs",
+										"{{waf_id}}"
+									],
+									"query": [
+										{
+											"key": "include",
+											"value": "configuration_set,owasp,rules,rule_statuses",
+											"description": "String. Include relationships. Optional, comma separated values. Permitted values: `configuration_set,owasp,rules,rule_statuses`.",
+											"disabled": true
+										}
+									]
+								},
+								"description": "**Description:**\n\nGet a specific firewall object."
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "OWASP",
+					"description": "# Section\nOWASP\n<br><br>\n## Description\nOWASP settings object used when configuring WAF.\n<br><br>\n## Fields\n<table>\n<tr>\n<th>Field</th>\n<th>Type</th>\n<th>Description</th>\n</tr>\n<tr>\n<th>allowed_http_versions</th>\n<td><i>String</i></td>\n<td>Allowed HTTP versions (default `HTTP/1.0 HTTP/1.1 HTTP/2`).</td>\n</tr>\n<tr>\n<th>allowed_methods</th>\n<td><i>String</i></td>\n<td>A space-separated list of HTTP method names (default `GET HEAD POST OPTIONS PUT PATCH DELETE`).</td>\n</tr>\n<tr>\n<th>allowed_request_content_type</th>\n<td><i>String</i></td>\n<td>Allowed request content types (default `application/x-www-form-urlencoded|multipart/form-data|text/xml|application/xml|application/x-amf|application/json|text/plain`).</td>\n</tr>\n<tr>\n<th>arg_length</th>\n<td><i>Integer</i></td>\n<td>The maximum number of arguments allowed (default `400`).</td>\n</tr>\n<tr>\n<th>arg_name_length</th>\n<td><i>Integer</i></td>\n<td>The maximum allowed argument name length (default `100`).</td>\n</tr>\n<tr>\n<th>combined_file_sizes</th>\n<td><i>Integer</i></td>\n<td>The maximum allowed size of all files (in bytes, default `10000000`).</td>\n</tr>\n<tr>\n<th>created_at</th>\n<td><i>String</i></td>\n<td>Date and time that the settings object was created.</td>\n</tr>\n<tr>\n<th>critical_anomaly_score</th>\n<td><i>Integer</i></td>\n<td>Score value to add for critical anomalies (default `6`).</td>\n</tr>\n<tr>\n<th>crs_validate_utf8_encoding</th>\n<td><i>Boolean</i></td>\n<td>CRS validate UTF8 encoding.</td>\n</tr>\n<tr>\n<th>error_anomaly_score</th>\n<td><i>Integer</i></td>\n<td>Score value to add for error anomalies (default `5`).</td>\n</tr>\n<tr>\n<th>high_risk_country_codes</th>\n<td><i>String</i></td>\n<td>A space-separated list of high-risk country codes.</td>\n</tr>\n<tr>\n<th>http_violation_score_threshold</th>\n<td><i>Integer</i></td>\n<td>HTTP violation threshold.</td>\n</tr>\n<tr>\n<th>inbound_anomaly_score_threshold</th>\n<td><i>Integer</i></td>\n<td>Inbound anomaly threshold.</td>\n</tr>\n<tr>\n<th>lfi_score_threshold</th>\n<td><i>Integer</i></td>\n<td>Local file injection attack threshold.</td>\n</tr>\n<tr>\n<th>max_file_size</th>\n<td><i>Integer</i></td>\n<td>The maximum allowed file size (in bytes, default `10000000`).</td>\n</tr>\n<tr>\n<th>max_num_args</th>\n<td><i>Integer</i></td>\n<td>The maximum number of arguments allowed (default `255`).</td>\n</tr>\n<tr>\n<th>notice_anomaly_score</th>\n<td><i>Integer</i></td>\n<td>Score value to add for notice anomalies (default `4`).</td>\n</tr>\n<tr>\n<th>paranoia_level</th>\n<td><i>Integer</i></td>\n<td>The configured paranoia level (default `1`).</td>\n</tr>\n<tr>\n<th>php_injection_score_threshold</th>\n<td><i>Integer</i></td>\n<td>PHP injection threshold.</td>\n</tr>\n<tr>\n<th>rce_score_threshold</th>\n<td><i>Integer</i></td>\n<td>Remote code execution threshold.</td>\n</tr>\n<tr>\n<th>restricted_extensions</th>\n<td><i>String</i></td>\n<td>A space-separated list of allowed file extensions (default `.asa/ .asax/ .ascx/ .axd/ .backup/ .bak/ .bat/ .cdx/ .cer/ .cfg/ .cmd/ .com/ .config/ .conf/ .cs/ .csproj/ .csr/ .dat/ .db/ .dbf/ .dll/ .dos/ .htr/ .htw/ .ida/ .idc/ .idq/ .inc/ .ini/ .key/ .licx/ .lnk/ .log/ .mdb/ .old/ .pass/ .pdb/ .pol/ .printer/ .pwd/ .resources/ .resx/ .sql/ .sys/ .vb/ .vbs/ .vbproj/ .vsdisco/ .webinfo/ .xsd/ .xsx`).</td>\n</tr>\n<tr>\n<th>restricted_headers</th>\n<td><i>String</i></td>\n<td>A space-separated list of allowed header names (default `/proxy/ /lock-token/ /content-range/ /translate/ /if/`).</td>\n</tr>\n<tr>\n<th>rfi_score_threshold</th>\n<td><i>Integer</i></td>\n<td>Remote file inclusion attack threshold.</td>\n</tr>\n<tr>\n<th>session_fixation_score_threshold</th>\n<td><i>Integer</i></td>\n<td>Session fixation attack threshold.</td>\n</tr>\n<tr>\n<th>sql_injection_score_threshold</th>\n<td><i>Integer</i></td>\n<td>SQL injection attack threshold.</td>\n</tr>\n<tr>\n<th>total_arg_length</th>\n<td><i>Integer</i></td>\n<td>The maximum size of argument names and values (default `6400`).</td>\n</tr>\n<tr>\n<th>updated_at</th>\n<td><i>String</i></td>\n<td>Date and time that the settings object was last updated.</td>\n</tr>\n<tr>\n<th>warning_anomaly_score</th>\n<td><i>Integer</i></td>\n<td>Score value to add for warning anomalies.</td>\n</tr>\n<tr>\n<th>xss_score_threshold</th>\n<td><i>Integer</i></td>\n<td>XSS attack threshold.</td>\n</tr>\n</table>",
+					"item": [
+						{
+							"name": "/service/SERVICE_ID/wafs/WAF_ID/owasp",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Fastly-Key",
+										"value": "{{token}}"
+									},
+									{
+										"key": "Accept",
+										"value": "application/vnd.api+json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{url}}/service/{{service_id}}/wafs/{{waf_id}}/owasp?",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"service",
+										"{{service_id}}",
+										"wafs",
+										"{{waf_id}}",
+										"owasp"
+									],
+									"query": [
+										{
+											"key": "service_id",
+											"value": "{{value}}",
+											"description": "String. The ID of the service.",
+											"disabled": true
+										},
+										{
+											"key": "waf_id",
+											"value": "{{value}}",
+											"description": "String. The firewall ID.",
+											"disabled": true
+										}
+									]
+								},
+								"description": "**Description:**\n\nGet an OWASP settings object for a particular service and firewall."
+							},
+							"response": []
+						},
+						{
+							"name": "/service/SERVICE_ID/wafs/WAF_ID/owasp",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 201\"] = responseCode.code === 201;"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Fastly-Key",
+										"value": "{{token}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/vnd.api+json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/vnd.api+json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"data\": {\n\t\t\"type\": \"owasp\"\n\t}\n}"
+								},
+								"url": {
+									"raw": "{{url}}/service/{{service_id}}/wafs/{{waf_id}}/owasp",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"service",
+										"{{service_id}}",
+										"wafs",
+										"{{waf_id}}",
+										"owasp"
+									]
+								},
+								"description": "**Description:**\n\nCreate an OWASP settings object for a particular service and firewall."
+							},
+							"response": []
+						},
+						{
+							"name": "/service/SERVICE_ID/wafs/WAF_ID/owasp",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Fastly-Key",
+										"value": "{{token}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/vnd.api+json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/vnd.api+json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"data\": {\n\t\t{\n\t\t\t\"attributes\": {\n\t\t\t\t\"inbound_anomaly_score_threshold\": 42,\n\t\t\t},\n\t\t\t\"id\": \"{{owasp_id}}\",\n\t\t\t\"type\": \"owasp\"\n\t\t}\n\t}\n}"
+								},
+								"url": {
+									"raw": "{{url}}/service/{{service_id}}/wafs/{{waf_id}}/owasp",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"service",
+										"{{service_id}}",
+										"wafs",
+										"{{waf_id}}",
+										"owasp"
+									]
+								},
+								"description": "**Description:**\n\nUpdate an OWASP settings object for a particular service and firewall."
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Rules",
+					"description": "# Section\nRules\n<br><br>\n## Description\nRules used when configuring WAF. Rules can be filtered by `rule_id`.\n<br><br>\n## Fields\n<table>\n<tr>\n<th>Field</th>\n<th>Type</th>\n<th>Description</th>\n</tr>\n<tr>\n<th>accuracy</th>\n<td><i>Integer</i></td>\n<td>Accuracy metadata of the rule.</td>\n</tr>\n<tr>\n<th>maturity</th>\n<td><i>Integer</i></td>\n<td>Maturity metadata for the rule.</td>\n</tr>\n<tr>\n<th>message</th>\n<td><i>String</i></td>\n<td>Message metadata for the rule.</td>\n</tr>\n<tr>\n<th>revision</th>\n<td><i>String</i></td>\n<td>Revision metadata for the rule.</td>\n</tr>\n<tr>\n<th>rule_id</th>\n<td><i>String</i></td>\n<td>Corresponding ModSecurity rule ID.</td>\n</tr>\n<tr>\n<th>severity</th>\n<td><i>Integer</i></td>\n<td>Severity metadata for the rule.</td>\n</tr>\n<tr>\n<th>version</th>\n<td><i>String</i></td>\n<td>Version metadata for the rule.</td>\n</tr>\n</table>",
+					"item": [
+						{
+							"name": "/wafs/rules",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Fastly-Key",
+										"value": "{{token}}"
+									},
+									{
+										"key": "Accept",
+										"value": "application/vnd.api+json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{url}}/wafs/rules?",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"wafs",
+										"rules"
+									],
+									"query": [
+										{
+											"key": "filter[rule_id]",
+											"value": "{{value}}",
+											"description": "String. Limit the returned rules to a specific rule ID.",
+											"disabled": true
+										},
+										{
+											"key": "filter[version]",
+											"value": "{{value}}",
+											"description": "Integer. Limit the returned rules to a specific version.",
+											"disabled": true
+										},
+										{
+											"key": "filter[revision]",
+											"value": "{{value}}",
+											"description": "String. Limit the returned rules to a specific revision.",
+											"disabled": true
+										},
+										{
+											"key": "filter[severity]",
+											"value": "{{value}}",
+											"description": "String. Limit the returned rules to a specific severity.",
+											"disabled": true
+										},
+										{
+											"key": "filter[maturity]",
+											"value": "{{value}}",
+											"description": "String. Limit the returned rules to a specific maturity.",
+											"disabled": true
+										},
+										{
+											"key": "filter[tags][name]",
+											"value": "{{value}}",
+											"description": "String. Limit the returned rules to a set linked to a tag by name.",
+											"disabled": true
+										},
+										{
+											"key": "filter[configuration_set_id].",
+											"value": "{{value}}",
+											"description": "Optional, limit rules to specific configuration set, or pass \"all\" to search all configuration sets, including stale ones.",
+											"disabled": true
+										},
+										{
+											"key": "page[size]",
+											"value": "100",
+											"description": "Integer. Limit the number of returned tags.",
+											"disabled": true
+										},
+										{
+											"key": "page[number]",
+											"value": "1",
+											"description": "Integer. Request a specific page of tags.",
+											"disabled": true
+										},
+										{
+											"key": "include",
+											"value": "source,vcl",
+											"description": "Array. Include relationships. Optional, comma separated values. Permitted values: `tags,rule_statuses`. May also include long text attributes `source,vcl`.",
+											"disabled": true
+										}
+									]
+								},
+								"description": "**Description:**\n\nList all rules in the latest configuration set."
+							},
+							"response": []
+						},
+						{
+							"name": "/wafs/rules/RULE_ID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Fastly-Key",
+										"value": "{{token}}"
+									},
+									{
+										"key": "Accept",
+										"value": "application/vnd.api+json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{url}}/wafs/rules/{{rule_id}}?",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"wafs",
+										"rules",
+										"{{rule_id}}"
+									],
+									"query": [
+										{
+											"key": "rule_id",
+											"value": "{{value}}",
+											"description": "String. The rule ID.",
+											"disabled": true
+										},
+										{
+											"key": "filter[configuration_set_id].",
+											"value": "{{value}}",
+											"description": "Optional, limit rule to a specific configuration set, or pass \"all\" to search all configuration sets, including stale ones.",
+											"disabled": true
+										}
+									]
+								},
+								"description": "**Description:**\n\nGet a specific rule."
+							},
+							"response": []
+						},
+						{
+							"name": "/wafs/rules/RULE_ID/vcl",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Fastly-Key",
+										"value": "{{token}}"
+									},
+									{
+										"key": "Accept",
+										"value": "application/vnd.api+json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{url}}/wafs/rules/{{rule_id}}/vcl?",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"wafs",
+										"rules",
+										"{{rule_id}}",
+										"vcl"
+									],
+									"query": [
+										{
+											"key": "rule_id",
+											"value": "{{value}}",
+											"description": "String. The rule ID.",
+											"disabled": true
+										}
+									]
+								},
+								"description": "**Description:**\n\nGet associated VCL for a specific rule."
+							},
+							"response": []
+						},
+						{
+							"name": "/wafs/WAF_ID/rules/RULE_ID/vcl",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Fastly-Key",
+										"value": "{{token}}"
+									},
+									{
+										"key": "Accept",
+										"value": "application/vnd.api+json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{url}}/wafs/{{waf_id}}/rules/{{rule_id}}/vcl?",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"wafs",
+										"{{waf_id}}",
+										"rules",
+										"{{rule_id}}",
+										"vcl"
+									],
+									"query": [
+										{
+											"key": "waf_id",
+											"value": "{{value}}",
+											"description": "String. The firewall ID.",
+											"disabled": true
+										},
+										{
+											"key": "rule_id",
+											"value": "{{value}}",
+											"description": "String. The rule ID.",
+											"disabled": true
+										}
+									]
+								},
+								"description": "**Description:**\n\nGet associated VCL for a specific rule associated with a specific firewall."
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Rule statuses",
+					"description": "# Section\nRule statuses\n<br><br>\n## Description\nRule status determines the state of a rule for a given firewall object.\n<br><br>\n## Fields\n<table>\n<tr>\n<th>Field</th>\n<th>Type</th>\n<th>Description</th>\n</tr>\n<tr>\n<th>status</th>\n<td><i>String</i></td>\n<td>The behavior of the VCL generated for the particular rule and firewall pair. Permitted values: `log`, `block`, and `disabled`.</td>\n</tr>\n<tr>\n<th>name</th>\n<td><i>String</i></td>\n<td>The name of the tag for which to create or update rule statuses with the specified status. For example, `OWASP` or `language-php`.</td>\n</tr>\n<tr>\n<th>force</th>\n<td><i>Boolean</i></td>\n<td>Whether or not to update rule statuses for disabled rules. Optional.</td>\n</tr>\n</table>",
+					"item": [
+						{
+							"name": "/service/SERVICE_ID/wafs/WAF_ID/rule_statuses",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Fastly-Key",
+										"value": "{{token}}"
+									},
+									{
+										"key": "Accept",
+										"value": "application/vnd.api+json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{url}}/service/{{service_id}}/wafs/{{waf_id}}/rule_statuses?",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"service",
+										"{{service_id}}",
+										"wafs",
+										"{{waf_id}}",
+										"rule_statuses"
+									],
+									"query": [
+										{
+											"key": "filter[status]",
+											"value": "{{value}}",
+											"description": "String. Limit results to rule statuses with the specified status.",
+											"disabled": true
+										},
+										{
+											"key": "filter[rule][accuracy]",
+											"value": "{{value}}",
+											"description": "Integer. Limit results to rule statuses whose rules have the specified accuracy.",
+											"disabled": true
+										},
+										{
+											"key": "filter[rule][maturity]",
+											"value": "{{value}}",
+											"description": "Integer. Limit results to rule statuses whose rules have the specified maturity.",
+											"disabled": true
+										},
+										{
+											"key": "filter[rule][message]",
+											"value": "{{value}}",
+											"description": "String. Limit results to rule statuses whose rules have the specified message.",
+											"disabled": true
+										},
+										{
+											"key": "filter[rule][revision]",
+											"value": "{{value}}",
+											"description": "Integer. Limit results to rule statuses whose rules have the specified revision.",
+											"disabled": true
+										},
+										{
+											"key": "filter[rule][rule_id]",
+											"value": "{{value}}",
+											"description": "String. Limit results to rule statuses whose rules represent the specified ModSecurity `rule_id`",
+											"disabled": true
+										},
+										{
+											"key": "filter[rule][tags]",
+											"value": "{{value}}",
+											"description": "Integer. Limit results to rule statuses whose rules relate to the specified tag IDs.",
+											"disabled": true
+										},
+										{
+											"key": "filter[rule][tags][name]",
+											"value": "{{value}}",
+											"description": "String. Limit results to rule statuses whose rules related to the named tags.",
+											"disabled": true
+										},
+										{
+											"key": "filter[rule][version]",
+											"value": "{{value}}",
+											"description": "String. Limit results to rule statuses whose rules have the specified version.",
+											"disabled": true
+										},
+										{
+											"key": "include",
+											"value": "tags",
+											"description": "Array. Include relationships. Optional, comma separated values. Permitted values: `tags`.",
+											"disabled": true
+										},
+										{
+											"key": "page[size]",
+											"value": "100",
+											"description": "Integer. Limit the number of returned tags.",
+											"disabled": true
+										},
+										{
+											"key": "page[number]",
+											"value": "1",
+											"description": "Integer. Request a specific page of tags.",
+											"disabled": true
+										}
+									]
+								},
+								"description": "**Description:**\n\nList all rule statuses for a particular service and firewall."
+							},
+							"response": []
+						},
+						{
+							"name": "/service/SERVICE_ID/wafs/WAF_ID/rules/RULE_ID/rule_status",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Fastly-Key",
+										"value": "{{token}}"
+									},
+									{
+										"key": "Accept",
+										"value": "application/vnd.api+json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{url}}/service/{{service_id}}/wafs/{{waf_id}}/rules/{{rule_id}}/rule_status?",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"service",
+										"{{service_id}}",
+										"wafs",
+										"{{waf_id}}",
+										"rules",
+										"{{rule_id}}",
+										"rule_status"
+									],
+									"query": [
+										{
+											"key": "service_id",
+											"value": "{{value}}",
+											"description": "String. The ID of the service.",
+											"disabled": true
+										},
+										{
+											"key": "rule_id",
+											"value": "{{value}}",
+											"description": "Integer. The ID of the rule associated with the rule status.",
+											"disabled": true
+										},
+										{
+											"key": "waf_id",
+											"value": "{{value}}",
+											"description": "String. The firewall ID.",
+											"disabled": true
+										}
+									]
+								},
+								"description": "**Description:**\n\nGet a specific rule status object for a particular service, firewall, and rule."
+							},
+							"response": []
+						},
+						{
+							"name": "/service/SERVICE_ID/wafs/WAF_ID/rules/RULE_ID/rule_status",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Fastly-Key",
+										"value": "{{token}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/vnd.api+json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/vnd.api+json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"data\": {\n\t\t\"attributes\": {\n\t\t\t\"status\": \"{{rule_status}}\"\n\t\t},\n\t\t\"id\": \"{{waf_id}}-{{rule_id}}\",\n\t\t\"type\": \"rule_status\"\n\t}\n}"
+								},
+								"url": {
+									"raw": "{{url}}/service/{{service_id}}/wafs/{{waf_id}}/rules/{{rule_id}}/rule_status",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"service",
+										"{{service_id}}",
+										"wafs",
+										"{{waf_id}}",
+										"rules",
+										"{{rule_id}}",
+										"rule_status"
+									]
+								},
+								"description": "**Description:**\n\nUpdate a rule status for a particular service, firewall, and rule."
+							},
+							"response": []
+						},
+						{
+							"name": "/service/SERVICE_ID/wafs/WAF_ID/rule_statuses",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Fastly-Key",
+										"value": "{{token}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/vnd.api+json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/vnd.api+json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"data\": {\n\t\t\"attributes\": {\n\t\t\t\"status\": \"block\",\n\t\t\t\"name\": \"application-FBC Market\",\n\t\t\t\"force\": true\n\t\t},\n\t\t\"type\": \"rule_status\"\n\t}\n}"
+								},
+								"url": {
+									"raw": "{{url}}/service/{{service_id}}/wafs/{{waf_id}}/rule_statuses",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"service",
+										"{{service_id}}",
+										"wafs",
+										"{{waf_id}}",
+										"rule_statuses"
+									]
+								},
+								"description": "**Description:**\n\nCreate or update all rule statuses for a particular service and firewall, based on tag name."
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Rule sets",
+					"description": "# Section\nRule sets\n<br><br>\n## Description\nSet of rules enabled for a firewall object when configuring WAF.\n<br><br>\n## Fields\n<table>\n<tr>\n<th>Field</th>\n<th>Type</th>\n<th>Description</th>\n</tr>\n<tr>\n<th>last_push</th>\n<td><i>String</i></td>\n<td>Date and time that VCL was last pushed to cache nodes.</td>\n</tr>\n<tr>\n<th>vcl</th>\n<td><i>String</i></td>\n<td>The VCL generated from the rule set.</td>\n</tr>\n</table>",
+					"item": [
+						{
+							"name": "/service/SERVICE_ID/wafs/WAF_ID/ruleset",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Fastly-Key",
+										"value": "{{token}}"
+									},
+									{
+										"key": "Accept",
+										"value": "application/vnd.api+json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{url}}/service/{{service_id}}/wafs/{{waf_id}}/ruleset?",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"service",
+										"{{service_id}}",
+										"wafs",
+										"{{waf_id}}",
+										"ruleset"
+									],
+									"query": [
+										{
+											"key": "service_id",
+											"value": "{{value}}",
+											"description": "String. The ID of the service.",
+											"disabled": true
+										},
+										{
+											"key": "waf_id",
+											"value": "{{value}}",
+											"description": "String. The firewall ID.",
+											"disabled": true
+										},
+										{
+											"key": "preview",
+											"value": "{{value}}",
+											"description": "Boolean. If present, allows for preview of generated VCL before pushing to cache nodes.",
+											"disabled": true
+										}
+									]
+								},
+								"description": "**Description:**\n\nGet a rule set for a particular service and firewall object."
+							},
+							"response": []
+						},
+						{
+							"name": "/service/SERVICE_ID/wafs/WAF_ID/ruleset",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 202\"] = responseCode.code === 202;"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Fastly-Key",
+										"value": "{{token}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/vnd.api+json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/vnd.api+json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"data\": {\n\t\t\"id\": \"{{waf_id}}\",\n\t\t\"type\": \"ruleset\"\n\t}\n}"
+								},
+								"url": {
+									"raw": "{{url}}/service/{{service_id}}/wafs/{{waf_id}}/ruleset",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"service",
+										"{{service_id}}",
+										"wafs",
+										"{{waf_id}}",
+										"ruleset"
+									]
+								},
+								"description": "**Description:**\n\nUpdate a rule set for a particular service and firewall object. If moving to a new configuration set, use the URL in the response to view the rule update status."
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Tags",
+					"description": "# Section\nTags\n<br><br>\n## Description\nTags for categorizing WAF rules. Tags can be filtered by name.\n<br><br>\n## Fields\n<table>\n<tr>\n<th>Field</th>\n<th>Type</th>\n<th>Description</th>\n</tr>\n<tr>\n<th>name</th>\n<td><i>String</i></td>\n<td>Name of the tag.</td>\n</tr>\n</table>",
+					"item": [
+						{
+							"name": "/wafs/tags",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Fastly-Key",
+										"value": "{{token}}"
+									},
+									{
+										"key": "Accept",
+										"value": "application/vnd.api+json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{url}}/wafs/tags?",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"wafs",
+										"tags"
+									],
+									"query": [
+										{
+											"key": "filter[name]",
+											"value": "{{value}}",
+											"description": "String. Limit the returned tags to a specific name.",
+											"disabled": true
+										},
+										{
+											"key": "page[size]",
+											"value": "100",
+											"description": "Integer. Limit the number of returned tags.",
+											"disabled": true
+										},
+										{
+											"key": "page[number]",
+											"value": "1",
+											"description": "Integer. Request a specific page of tags.",
+											"disabled": true
+										},
+										{
+											"key": "include",
+											"value": "rules",
+											"description": "Array. Include relationships. Optional, comma separated values. Permitted values: `rules`.",
+											"disabled": true
+										}
+									]
+								},
+								"description": "**Description:**\n\nList all tags."
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Update statuses",
+					"description": "# Section\nUpdate statuses\n<br><br>\n## Description\nUpdate status indicates the status of an asynchronous process for updating a firewall object.\n<br><br>\n## Fields\n<table>\n<tr>\n<th>Field</th>\n<th>Type</th>\n<th>Description</th>\n</tr>\n<tr>\n<th>completed_at</th>\n<td><i>String</i></td>\n<td>Date and time that job was completed.</td>\n</tr>\n<tr>\n<th>created_at</th>\n<td><i>String</i></td>\n<td>Date and time that job was created.</td>\n</tr>\n<tr>\n<th>message</th>\n<td><i>String</i></td>\n<td>Message with information about the status of the update.</td>\n</tr>\n<tr>\n<th>status</th>\n<td><i>String</i></td>\n<td>Current status of the update.</td>\n</tr>\n<tr>\n<th>updated_at</th>\n<td><i>String</i></td>\n<td>Date and time that job was last updated.</td>\n</tr>\n</table>",
+					"item": [
+						{
+							"name": "/service/SERVICE_ID/wafs/WAF_ID/update_statuses",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Fastly-Key",
+										"value": "{{token}}"
+									},
+									{
+										"key": "Accept",
+										"value": "application/vnd.api+json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{url}}/service/{{service_id}}/wafs/{{waf_id}}/update_statuses?",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"service",
+										"{{service_id}}",
+										"wafs",
+										"{{waf_id}}",
+										"update_statuses"
+									],
+									"query": [
+										{
+											"key": "page[size]",
+											"value": "100",
+											"description": "Integer. Limit the number of returned tags.",
+											"disabled": true
+										},
+										{
+											"key": "page[number]",
+											"value": "1",
+											"description": "Integer. Request a specific page of tags.",
+											"disabled": true
+										},
+										{
+											"key": "include",
+											"value": "waf",
+											"description": "String. Include relationships. Optional, comma separated values. Permitted values: `waf`.",
+											"disabled": true
+										}
+									]
+								},
+								"description": "**Description:**\n\nList all update statuses for a particular service and firewall object."
+							},
+							"response": []
+						},
+						{
+							"name": "/service/SERVICE_ID/wafs/WAF_ID/update_statuses/UPDATE_STATUS_ID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Fastly-Key",
+										"value": "{{token}}"
+									},
+									{
+										"key": "Accept",
+										"value": "application/vnd.api+json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{url}}/service/{{service_id}}/wafs/{{waf_id}}/update_statuses/{{update_status_id}}?",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"service",
+										"{{service_id}}",
+										"wafs",
+										"{{waf_id}}",
+										"update_statuses",
+										"{{update_status_id}}"
+									],
+									"query": [
+										{
+											"key": "service_id",
+											"value": "{{value}}",
+											"description": "String. The ID of the service.",
+											"disabled": true
+										},
+										{
+											"key": "waf_id",
+											"value": "{{value}}",
+											"description": "String. The firewall ID.",
+											"disabled": true
+										},
+										{
+											"key": "update_status_id",
+											"value": "{{value}}",
+											"description": "String. The update status ID.",
+											"disabled": true
+										}
+									]
+								},
+								"description": "**Description:**\n\nGet a specific update status object for a particular service and firewall object."
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "/service/SERVICE_ID/details",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"jsonData = pm.response.json();",
+									"try { txtName = jsonData[\"name\"]; } catch(e) { txtName = \"ERROR_INITIALIZING\"; }",
+									"try { txtVersion = jsonData[\"active_version\"][\"number\"]; } catch(e) { txtVersion = \"ERROR_INITIALIZING\"; }",
+									"try { txtWafId = jsonData[\"active_version\"][\"wafs\"][0][\"id\"]; } catch(e) {  txtWafId = \"ERROR_INITIALIZING\"; }",
+									"pm.environment.set(\"service_name\", txtName);",
+									"pm.environment.set(\"version_no\", txtVersion);",
+									"pm.environment.set(\"version\", txtVersion);",
+									"pm.environment.set(\"waf_id\", txtWafId);",
+									"console.log(\"Name: \"+txtName);",
+									"console.log(\"Active Version: \"+txtVersion);",
+									"console.log(\"WAF ID: \"+txtWafId);"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Fastly-Key",
+								"value": "{{token}}"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/service/{{service_id}}/details",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"service",
+								"{{service_id}}",
+								"details"
+							]
+						},
+						"description": "**Description:**\n\nList detailed information on a specified service"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "d392a76b-890e-45fc-8069-e45c4c395815",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "dfa6fc61-5727-41a5-8d2a-63dfc7953f1b",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
